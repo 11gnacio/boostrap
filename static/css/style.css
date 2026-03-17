@@ -1,0 +1,141 @@
+/* Reinicio de los estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+}
+
+.navbar img {
+    border-radius: 50%;
+    width: 60px;
+    border: solid 2px white;
+    box-shadow:
+        2px 2px 4px rgb(59, 59, 59),
+        2px 2px 4px rgb(12, 5, 110);
+}
+
+.navbar {
+    box-shadow: 2px 2px 4px rgb(148, 146, 146);
+    background: linear-gradient(135deg, #000000 0%, #2c3e50 100%);
+}
+
+.navbar h1 {
+    font-family: "Cinzel", serif;
+}
+
+.navbar input {
+    padding-left: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.navbar input::placeholder {
+    font-family: "Cinzel", serif;
+}
+
+.bi-search {
+    color: #fff;
+}
+
+.navbar .Buscar {
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    width: 40px;
+    background: linear-gradient(135deg, #000000 0%, #56799c 100%);
+    transition: 0.30s ease;
+}
+
+.navbar .Buscar:hover {
+    transform: scale(1.1);
+    transition: 0.30s ease;
+}
+
+ body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sección */
+    .seccion-uno {
+      min-height: 100vh;
+    }
+
+    /* Lado izquierdo (espacio) */
+    .izquierda-uno {
+      background: radial-gradient(circle, #000814, #000000);
+    }
+
+    .seccion-uno h2 {
+         font-family: "Cinzel", serif;
+    }
+
+    /* Lado derecho */
+    .derecha-uno {
+      background: linear-gradient(135deg, #000000 0%, #56799c 100%);
+      color: white;
+    }
+
+    /* 🌍 Tierra */
+    .tierra {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-image: url("../images/tierra.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: girar 20s linear infinite;
+  box-shadow: 0 0 40px rgba(0, 150, 255, 0.7);
+  /* Añadimos esto para que la sombra no empuje el borde */
+  max-width: 80vw; 
+  max-height: 80vw;
+}
+
+    /* Animación */
+    @keyframes girar {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Título */
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    /* --- Ajustes Responsivos --- */
+
+@media (max-width: 768px) {
+    .seccion-uno {
+        /* En móvil, permitimos que la sección crezca según el contenido */
+        min-height: auto;
+        padding: 50px 0;
+    }
+
+    .tierra {
+        /* Reducimos el tamaño de la tierra para que quepa en pantallas pequeñas */
+        width: 200px; 
+        height: 200px;
+        margin-bottom: 30px; /* Separación con el texto de abajo */
+    }
+
+    h2 {
+        font-size: 1.8rem; /* Texto un poco más pequeño en móvil */
+        padding: 0 20px;
+    }
+
+    .izquierda-uno, .derecha-uno {
+        /* Aseguramos que cada parte ocupe el alto necesario */
+        min-height: 40vh;
+    }
+}

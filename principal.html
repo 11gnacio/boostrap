@@ -1,0 +1,72 @@
+<!DOCTYPE html> <!-- Inicio del HTML 5 -->
+<html lang="es"> <!-- Espanol -->
+
+<head> <!-- Cabeza  de la pagina -->
+    <meta charset="UTF-8"> <!-- Indica que podemos utilizar caracteres especiales -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Indica que la pagina es responsiva -->
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>El Eco de los Siglos</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Cinzel:wght@400..900&family=Edu+NSW+ACT+Cursive:wght@400..700&family=Flamenco:wght@300;400&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- Boostrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head> <!-- Fin de la Cabeza de la pagina -->
+
+<body> <!-- Inicio del cuerpo de la pagina -->
+    <nav class="navbar navbar-expand-lg navbar-dark p-3 bg-dark"> 
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <img src="static/images/logo_boostrap.jpg" alt="" style="width: 40px;">
+            <h1 class="h3 m-0 text-white" style="font-family: 'Cinzel', serif;">El Eco de los Siglos</h1>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+            
+            <form class="d-flex mx-auto mt-3 mt-lg-0" style="max-width: 500px; width: 100%;">
+                <div class="input-group">
+                    <input class="form-control border-end-0 " type="search" placeholder="Buscar en los siglos...">
+                    <button class="Buscar btn-success border-start-0" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="d-flex gap-2 mt-3 mt-lg-0">
+                <button class="btn btn-outline-light w-100">Login</button>
+                <button class="btn btn-success w-100">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container-fluid p-0 overflow-hidden">
+    <section class="row g-0 seccion-uno"> <div class="col-md-6 d-flex justify-content-center align-items-center izquierda-uno order-2 order-md-1">
+        <div class="tierra"></div>
+      </div>
+
+      <div class="col-md-6 d-flex justify-content-center align-items-center derecha-uno order-1 order-md-2">
+        <h2 class="p-4">Bienvenido a la Gran Línea Temporal</h2>
+      </div>
+
+    </section>
+</main>
+<!-- Container de la pagina  -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="static/js/script.js"></script>
+</body> <!-- Fin del cuerpo de la pagina -->
+
+</html> <!-- Fin del HTML 5 -->
