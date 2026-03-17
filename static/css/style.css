@@ -81,7 +81,7 @@ body {
       color: white;
     }
 
-    /* 🌍 Tierra */
+    /* Tierra */
     .tierra {
   width: 350px;
   height: 350px;
@@ -92,7 +92,7 @@ body {
   background-repeat: no-repeat;
   animation: girar 20s linear infinite;
   box-shadow: 0 0 40px rgba(0, 150, 255, 0.7);
-  /* Añadimos esto para que la sombra no empuje el borde */
+  /* sombra no empuje el borde */
   max-width: 80vw; 
   max-height: 80vw;
 }
@@ -117,13 +117,11 @@ body {
 
 @media (max-width: 768px) {
     .seccion-uno {
-        /* En móvil, permitimos que la sección crezca según el contenido */
         min-height: auto;
         padding: 50px 0;
     }
 
     .tierra {
-        /* Reducimos el tamaño de la tierra para que quepa en pantallas pequeñas */
         width: 200px; 
         height: 200px;
         margin-bottom: 30px; /* Separación con el texto de abajo */
@@ -135,7 +133,7 @@ body {
     }
 
     .izquierda-uno, .derecha-uno {
-        /* Aseguramos que cada parte ocupe el alto necesario */
+        /* alto necesario */
         min-height: 40vh;
     }
 }
