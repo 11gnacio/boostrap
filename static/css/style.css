@@ -90,7 +90,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  animation: girar 20s linear infinite;
+  animation: girar 50s linear infinite;
   box-shadow: 0 0 40px rgba(0, 150, 255, 0.7);
   /* sombra no empuje el borde */
   max-width: 80vw; 
