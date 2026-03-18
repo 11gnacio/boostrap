@@ -77,7 +77,7 @@ body {
 
     /* Lado derecho */
     .derecha-uno {
-      background: linear-gradient(135deg, #000000 0%, #56799c 100%);
+      background: linear-gradient(135deg, #3d3d3d 0%, #56799c 100%);
       color: white;
     }
 
