@@ -1,139 +1,454 @@
-/* Reinicio de los estilos */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =============================================
+   VARIABLES GLOBALES
+   Las variables CSS (--nombre) permiten
+   reutilizar valores en todo el archivo.
+   Si queremos cambiar un color, lo cambiamos
+   solo aquí y se actualiza en toda la página.
+============================================= */
+:root {
+  --color-fondo:    #030810;                /* azul casi negro para el fondo espacial */
+  --color-texto:    #f0eadc;                /* blanco cálido para el título principal */
+  --color-acento:   rgba(140, 180, 255, 0.7); /* azul claro semitransparente */
+  --color-sub:      rgba(210, 200, 185, 0.75);/* beige semitransparente para subtítulo */
+  --fuente-titulo:  'Cinzel', serif;          /* fuente histórica para títulos */
+  --fuente-cuerpo:  'EB Garamond', serif;     /* fuente serif elegante para textos */
+}
+
+/* =============================================
+   RESET BÁSICO
+   Los navegadores agregan márgenes y rellenos
+   por defecto. Los eliminamos para tener
+   control total del diseño.
+============================================= */
+*, *::before, *::after {
+  box-sizing: border-box; /* el tamaño de un elemento incluye su padding y borde */
+  margin: 0;              /* elimina márgenes por defecto del navegador */
+  padding: 0;             /* elimina rellenos por defecto del navegador */
 }
 
 body {
-    background-color: black;
+  background: var(--color-fondo);    /* fondo oscuro en toda la página */
+  font-family: var(--fuente-cuerpo); /* fuente base para todo el texto */
+  color: var(--color-texto);         /* color de texto base */
 }
 
-.navbar img {
-    border-radius: 50%;
-    width: 60px;
-    border: solid 2px white;
-    box-shadow:
-        2px 2px 4px rgb(59, 59, 59),
-        2px 2px 4px rgb(12, 5, 110);
+/* =============================================
+   ANIMACIÓN DE ROTACIÓN DEL GLOBO
+   @keyframes define los pasos de la animación.
+   "from" es el inicio, "to" es el final.
+   El navegador calcula automáticamente los
+   pasos intermedios (interpolación).
+============================================= */
+@keyframes spinGlobe {
+  from { transform: rotate(0deg);   } /* empieza en 0 grados (posición normal) */
+  to   { transform: rotate(360deg); } /* termina en 360 grados (vuelta completa) */
 }
 
-.navbar {
-    box-shadow: 2px 2px 4px rgb(148, 146, 146);
-    background: linear-gradient(135deg, #000000 0%, #2c3e50 100%);
+/* =============================================
+   HERO: CONTENEDOR PRINCIPAL
+   El "hero" es la gran sección de bienvenida
+   que ocupa toda la pantalla al entrar al sitio.
+============================================= */
+.hero-wrap {
+  position: relative;      /* permite que los hijos se posicionen con absolute dentro */
+  width: 100%;             /* ocupa todo el ancho de la pantalla */
+  min-height: 100vh;       /* mínimo 100% de la altura de la ventana (vh = viewport height) */
+  overflow: hidden;        /* oculta todo lo que salga de los bordes del contenedor */
+  background: var(--color-fondo); /* fondo oscuro espacial */
 }
 
-.navbar h1 {
-    font-family: "Cinzel", serif;
+/* =============================================
+   CAPA DE ESTRELLAS
+   Usamos múltiples radial-gradient para simular
+   estrellas. Cada degradado circular pequeño
+   crea un punto de luz en distintas posiciones.
+============================================= */
+.stars {
+  position: absolute; /* se superpone sobre el fondo */
+  inset: 0;           /* ocupa todo el contenedor: top:0 right:0 bottom:0 left:0 */
+  background-image:
+    /* Cada línea es una estrella: tamaño, posición y opacidad distintos */
+    /* radial-gradient(tamaño at posición-x posición-y, color-centro, color-borde) */
+    radial-gradient(1px   1px   at 12% 18%, rgba(255, 255, 255, 0.7) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 34% 72%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 58% 25%, rgba(255, 255, 255, 0.8) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 78% 55%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 92% 14%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 22% 88%, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 45% 46%, rgba(255, 255, 255, 0.5) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 67% 82%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 38%, rgba(255, 255, 255, 0.6) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 5%  62%, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
 }
 
-.navbar input {
-    padding-left: 20px;
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+/* =============================================
+   CAPA DE NEBULOSA
+   Agrega un brillo azul/violeta difuso en el
+   fondo para dar profundidad espacial.
+============================================= */
+.nebula {
+  position: absolute; /* se superpone encima de las estrellas */
+  inset: 0;           /* ocupa todo el contenedor */
+  background:
+    /* brillo azul grande centrado en la pantalla */
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(30, 50, 100, 0.25) 0%, transparent 70%),
+    /* brillo violeta en la esquina inferior izquierda */
+    radial-gradient(ellipse 30% 50% at 20% 80%, rgba(60, 20,  80, 0.15) 0%, transparent 60%);
+    /* ellipse: forma ovalada del brillo */
+    /* 60% 40%: ancho y alto del óvalo */
+    /* at 50% 50%: posición centrada */
 }
 
-.navbar input::placeholder {
-    font-family: "Cinzel", serif;
+/* =============================================
+   GLOBO TERRÁQUEO: CONTENEDOR CIRCULAR
+   Recorta la imagen en forma de círculo usando
+   border-radius:50% y overflow:hidden.
+============================================= */
+.globe-container {
+  position: absolute;               /* posicionado respecto al .hero-wrap */
+  left: 50%;                        /* empieza desde el centro horizontal */
+  top: 50%;                         /* empieza desde el centro vertical */
+  transform: translate(-50%, -50%); /* se desplaza su propio 50% para centrarse perfectamente */
+  width: 340px;                     /* ancho del círculo */
+  height: 340px;                    /* alto del círculo (igual que ancho = círculo perfecto) */
+  border-radius: 50%;               /* hace el contenedor circular */
+  overflow: hidden;                 /* recorta la imagen para que quede dentro del círculo */
+  box-shadow:
+    0 0  60px rgba(50, 120, 255, 0.30), /* halo azul exterior difuminado 60px */
+    0 0 120px rgba(30,  80, 200, 0.15), /* halo más grande y suave */
+    inset 0 0 40px rgba(0, 0, 0, 0.60); /* sombra interna: oscurece los bordes del globo */
+    /* box-shadow: offset-x offset-y blur color */
+    /* inset: la sombra va hacia adentro del elemento */
 }
 
-.bi-search {
-    color: #fff;
+/* Imagen de la Tierra */
+.globe-img {
+  width: 100%;        /* ocupa todo el ancho del contenedor circular */
+  height: 100%;       /* ocupa todo el alto */
+  object-fit: cover;  /* la imagen cubre el espacio sin deformarse ni dejar huecos */
+  border-radius: 50%; /* también redondea la imagen por si acaso */
+  display: block;     /* evita el espacio extra que dejan las imágenes inline por defecto */
+
+  /* ANIMACIÓN CSS PURA - sin JavaScript */
+  animation: spinGlobe 20s linear infinite;
+  /* spinGlobe: nombre de la animación definida con @keyframes arriba */
+  /* 20s: tarda 20 segundos en dar una vuelta completa (más grande = más lento) */
+  /* linear: velocidad constante, no acelera ni frena en ningún punto */
+  /* infinite: se repite para siempre */
 }
 
-.navbar .Buscar {
-    border: none;
-    padding: 5px;
-    border-radius: 50%;
-    width: 40px;
-    background: linear-gradient(135deg, #000000 0%, #56799c 100%);
-    transition: 0.30s ease;
+/* =============================================
+   HALO DEL GLOBO
+   Círculo más grande que el globo que simula
+   el resplandor atmosférico de la Tierra.
+============================================= */
+.globe-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* centrado igual que el globo */
+  width: 420px;       /* 80px más grande que el globo para que se vea el halo */
+  height: 420px;
+  border-radius: 50%; /* forma circular */
+  background: radial-gradient(
+    ellipse,                         /* forma ovalada */
+    rgba(40, 100, 255, 0.12) 0%,     /* azul muy transparente en el centro */
+    transparent 70%                  /* se desvanece completamente hacia afuera */
+  );
+  pointer-events: none; /* este div no recibe clics del mouse, los pasa al elemento debajo */
 }
 
-.navbar .Buscar:hover {
-    transform: scale(1.1);
-    transition: 0.30s ease;
-}
-
- body {
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Sección */
-    .seccion-uno {
-      min-height: 100vh;
-    }
-
-    /* Lado izquierdo (espacio) */
-    .izquierda-uno {
-      background: radial-gradient(circle, #000814, #000000);
-    }
-
-    .seccion-uno h2 {
-         font-family: "Cinzel", serif;
-    }
-
-    /* Lado derecho */
-    .derecha-uno {
-      background: linear-gradient(135deg, #3d3d3d 0%, #56799c 100%);
-      color: white;
-    }
-
-    /* Tierra */
-    .tierra {
-  width: 350px;
-  height: 350px;
+/* Aro sutil alrededor del globo */
+.globe-rim {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 348px;       /* 4px más grande que el globo */
+  height: 348px;
   border-radius: 50%;
-  background-image: url("../images/tierra.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  animation: girar 50s linear infinite;
-  box-shadow: 0 0 40px rgba(0, 150, 255, 0.7);
-  /* sombra no empuje el borde */
-  max-width: 80vw; 
-  max-height: 80vw;
+  border: 1px solid rgba(100, 160, 255, 0.2); /* línea azul muy sutil y semitransparente */
+  pointer-events: none; /* no intercepta clics del mouse */
 }
 
-    /* Animación */
-    @keyframes girar {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
+/* =============================================
+   CAPA DE CONTENIDO (texto sobre el globo)
+   position:absolute + inset:0 hace que ocupe
+   todo el hero. Flexbox centra el texto.
+============================================= */
+.content-overlay {
+  position: absolute;          /* flota encima de todas las capas anteriores */
+  inset: 0;                    /* ocupa todo el espacio del hero */
+  display: flex;               /* activa flexbox para alinear el contenido */
+  flex-direction: column;      /* apila los elementos verticalmente */
+  align-items: center;         /* centra horizontalmente */
+  justify-content: center;     /* centra verticalmente */
+  text-align: center;          /* centra el texto dentro de los elementos */
+  padding: 40px 24px;          /* relleno: 40px arriba/abajo, 24px lados */
+  /* Degradado oscuro en el centro para que el texto se lea sobre la imagen del globo */
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%, /* óvalo ancho centrado en la pantalla */
+    rgba(3, 8, 16, 0.5) 0%,     /* oscuro semitransparente en el centro */
+    transparent 100%             /* completamente transparente en los bordes */
+  );
+}
 
-    /* Título */
-    h2 {
-      font-size: 2.5rem;
-      text-align: center;
-    }
+/* Bloque del texto: lo sube para que quede en la mitad superior del globo */
+.content-inner {
+  margin-top: -160px; /* margen negativo: sube el texto 160px desde el centro */
+}
 
-    /* --- Ajustes Responsivos --- */
+/* =============================================
+   TIPOGRAFÍA DEL HERO
+============================================= */
 
+/* Texto pequeño encima del título (tipo etiqueta) */
+.eyebrow {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 11px;
+  letter-spacing: 0.3em;   /* amplio espacio entre letras = efecto elegante */
+  color: var(--color-acento); /* azul claro */
+  text-transform: uppercase;  /* convierte el texto a MAYÚSCULAS automáticamente */
+  margin-bottom: 16px;        /* espacio debajo del texto */
+}
+
+/* Título principal grande */
+.hero-title {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 52px;
+  font-weight: 700;              /* negrita */
+  color: var(--color-texto);     /* blanco cálido */
+  line-height: 1.1;              /* altura de línea: 110% del tamaño de fuente */
+  letter-spacing: 0.02em;        /* leve espaciado entre letras */
+  margin-bottom: 14px;
+  text-shadow:
+    0 0  40px rgba(80, 140, 255, 0.4), /* brillo azul difuso alrededor del texto */
+    0 2px 20px rgba(0,  0,   0, 0.8);  /* sombra oscura abajo para legibilidad */
+    /* text-shadow: offset-x offset-y blur color */
+}
+
+/* Línea decorativa horizontal entre título y subtítulo */
+.divider-line {
+  width: 60px;  /* ancho fijo */
+  height: 1px;  /* muy delgada */
+  /* degradado de izquierda a derecha: transparente → azul → transparente */
+  background: linear-gradient(90deg, transparent, rgba(140, 180, 255, 0.4), transparent);
+  margin: 0 auto 28px; /* centrada (auto en lados) con 28px de margen inferior */
+}
+
+/* Subtítulo en cursiva */
+.hero-subtitle {
+  font-size: 19px;
+  font-style: italic;           /* cursiva */
+  color: var(--color-sub);      /* beige semitransparente */
+  margin-bottom: 36px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); /* sombra para legibilidad */
+  max-width: 480px;             /* ancho máximo para mejor legibilidad */
+}
+
+/* =============================================
+   BOTONES PERSONALIZADOS
+   Bootstrap da la base con .btn
+   Nosotros agregamos nuestro estilo encima.
+============================================= */
+
+/* Estilos comunes a nuestros dos botones */
+.btn-eco {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 13px;
+  letter-spacing: 0.1em; /* leve espaciado entre letras */
+  padding: 11px 28px;    /* relleno: 11px arriba/abajo, 28px lados */
+  border-radius: 3px;    /* esquinas ligeramente redondeadas */
+  transition: all 0.25s; /* animación suave de 0.25 segundos al hacer hover */
+  text-decoration: none; /* elimina el subrayado si el botón es un <a> */
+}
+
+/* Botón fantasma: fondo transparente con borde */
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.08);    /* blanco muy transparente */
+  border: 1px solid rgba(140, 180, 255, 0.35); /* borde azul semitransparente */
+  color: #c8d8f8;                              /* texto azul claro */
+  backdrop-filter: blur(4px); /* desenfoca lo que hay detrás del botón */
+}
+/* Cuando el mouse pasa encima del botón fantasma */
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.14); /* fondo un poco más visible */
+  border-color: rgba(140, 180, 255, 0.6);/* borde más visible */
+  color: #ffffff;                         /* texto blanco puro */
+}
+
+/* Botón sólido: fondo azul */
+.btn-solid {
+  background: rgba(50, 110, 220, 0.7);       /* azul semitransparente */
+  border: 1px solid rgba(80, 140, 255, 0.5); /* borde azul más claro */
+  color: #e8f0ff;                             /* texto azul muy claro */
+}
+/* Cuando el mouse pasa encima del botón sólido */
+.btn-solid:hover {
+  background: rgba(60, 130, 240, 0.9); /* más opaco al pasar el mouse */
+  color: #ffffff;
+}
+
+/* =============================================
+   NAVBAR PERSONALIZADA
+   Bootstrap da .navbar como base.
+   Nosotros la posicionamos encima del hero
+   y le agregamos el degradado que se desvanece.
+============================================= */
+.navbar-eco {
+  position: absolute; /* flota encima del hero sin ocupar espacio en el flujo normal */
+  top: 0;             /* pegada al borde superior */
+  left: 0;            /* pegada al borde izquierdo */
+  right: 0;           /* se extiende hasta el borde derecho */
+  z-index: 10;        /* encima de todo (número mayor = más adelante en la pantalla) */
+  padding: 16px 32px; /* relleno: 16px arriba/abajo, 32px lados */
+  /* Degradado de arriba hacia abajo: oscuro → transparente */
+  /* Evita que la navbar tenga un borde brusco con el hero */
+  background: linear-gradient(
+    180deg,                /* dirección: de arriba (0%) hacia abajo (100%) */
+    rgba(3, 8, 16, 0.85) 0%,  /* muy oscuro arriba */
+    transparent 100%           /* completamente transparente abajo */
+  );
+}
+
+/* Texto del nombre del sitio en la navbar */
+.brand-text {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 15px;
+  letter-spacing: 0.12em; /* espaciado amplio entre letras */
+  color: #c8d8f8;          /* azul claro */
+  text-decoration: none;   /* elimina el subrayado del enlace */
+}
+
+/* Ícono circular azul que simula un pequeño planeta */
+.brand-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%; /* círculo perfecto */
+  /* degradado que simula iluminación desde arriba-izquierda */
+  background: radial-gradient(circle at 35% 35%, #4488ff, #0a1a4a);
+  /* circle at 35% 35%: el punto de luz está en la esquina superior izquierda */
+  border: 1px solid rgba(100, 160, 255, 0.3); /* borde sutil azul */
+}
+.brand-dot img{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+/* =============================================
+   BARRA DE BÚSQUEDA EN LA NAVBAR
+   Bootstrap nos da .form-control para el input.
+   Nosotros sobreescribimos sus estilos.
+============================================= */
+.search-wrapper {
+  position: relative; /* para poder posicionar el ícono de lupa dentro */
+  width: 280px;       /* ancho fijo de la barra de búsqueda */
+}
+
+/* Sobreescribimos el estilo del input de Bootstrap */
+.search-wrapper .form-control {
+  background: rgba(255, 255, 255, 0.07);      /* fondo muy transparente */
+  border: 1px solid rgba(140, 180, 255, 0.2); /* borde azul sutil */
+  border-radius: 3px;                         /* esquinas casi cuadradas */
+  color: rgba(200, 216, 248, 0.9);            /* texto azul claro */
+  font-family: var(--fuente-cuerpo);          /* EB Garamond */
+  font-size: 14px;
+  padding: 7px 14px 7px 36px; /* padding izquierdo extra (36px) para que no tape el ícono */
+}
+
+/* Texto de ayuda del input que desaparece al escribir */
+.search-wrapper .form-control::placeholder {
+  color: rgba(140, 180, 255, 0.4); /* azul muy tenue */
+}
+
+/* Cuando el usuario hace clic en el input (estado focus) */
+.search-wrapper .form-control:focus {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(140, 180, 255, 0.45);
+  box-shadow: none; /* elimina el resplandor azul que Bootstrap agrega por defecto al focus */
+  color: #e0ecff;
+}
+
+/* Ícono de lupa hecho con CSS puro (sin imagen ni SVG) */
+.search-icon-css {
+  position: absolute;          /* posicionado dentro del .search-wrapper */
+  left: 12px;                  /* 12px desde la izquierda del input */
+  top: 50%;                    /* empieza desde el centro vertical */
+  transform: translateY(-50%); /* sube la mitad de su alto para centrarse exactamente */
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid rgba(140, 180, 255, 0.5); /* círculo azul = cuerpo de la lupa */
+  border-radius: 50%;
+  pointer-events: none; /* no interfiere con el clic en el input que está detrás */
+}
+
+/* Palito de la lupa usando el pseudo-elemento ::after */
+.search-icon-css::after {
+  content: '';        /* necesario para que ::after aparezca (sin esto no se ve) */
+  position: absolute;
+  bottom: -4px;       /* sale por debajo del círculo */
+  right: -4px;        /* sale por la derecha del círculo */
+  width: 5px;         /* largo del palito */
+  height: 1.5px;      /* grosor del palito */
+  background: rgba(140, 180, 255, 0.5); /* mismo color que el círculo */
+  transform: rotate(45deg);             /* lo pone en diagonal */
+}
+
+/* =============================================
+   ANIMACIÓN DE SCROLL
+   Tres puntos que rebotan hacia abajo para
+   indicarle al usuario que puede hacer scroll.
+============================================= */
+.scroll-hint {
+  position: absolute;          /* posicionado en el hero */
+  bottom: 24px;                /* 24px desde el borde inferior */
+  left: 50%;
+  transform: translateX(-50%); /* centra horizontalmente */
+  opacity: 0.4;                /* semitransparente: es decorativo, no debe distraer */
+}
+
+/* Cada punto del indicador de scroll */
+.scroll-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;                /* círculo perfecto */
+  background: rgba(140, 180, 255, 0.8); /* azul claro */
+  margin: 3px auto;                     /* centrado con espacio entre puntos */
+  animation: scrollBounce 1.6s ease-in-out infinite; /* animación en loop */
+  /* scrollBounce: nombre de la animación definida abajo */
+  /* 1.6s: tarda 1.6 segundos en completar un ciclo */
+  /* ease-in-out: acelera al inicio y frena al final del movimiento */
+  /* infinite: se repite para siempre */
+}
+
+/* Retraso escalonado: cada punto empieza un poco después del anterior */
+.scroll-dot:nth-child(2) { animation-delay: 0.2s; } /* segundo punto: empieza 0.2s después */
+.scroll-dot:nth-child(3) { animation-delay: 0.4s; } /* tercer punto: empieza 0.4s después */
+
+/* Definición de la animación de rebote */
+@keyframes scrollBounce {
+  0%, 100% {
+    opacity: 0.3;              /* al inicio y al final: casi invisible */
+    transform: translateY(0);  /* en posición original */
+  }
+  50% {
+    opacity: 1;                /* en el punto medio: completamente visible */
+    transform: translateY(4px);/* se mueve 4px hacia abajo */
+  }
+}
+
+/* =============================================
+   RESPONSIVE: PANTALLAS PEQUEÑAS
+   @media aplica estos estilos SOLO cuando el
+   ancho de pantalla es menor a 768px (móviles).
+   Reducimos tamaños para que todo entre bien.
+============================================= */
 @media (max-width: 768px) {
-    .seccion-uno {
-        min-height: auto;
-        padding: 50px 0;
-    }
-
-    .tierra {
-        width: 200px; 
-        height: 200px;
-        margin-bottom: 30px; /* Separación con el texto de abajo */
-    }
-
-    h2 {
-        font-size: 1.8rem; /* Texto un poco más pequeño en móvil */
-        padding: 0 20px;
-    }
-
-    .izquierda-uno, .derecha-uno {
-        /* alto necesario */
-        min-height: 40vh;
-    }
+  .hero-title      { font-size: 32px; }             /* título más pequeño en móvil */
+  .hero-subtitle   { font-size: 16px; }             /* subtítulo más pequeño */
+  .search-wrapper  { display: none; }               /* oculta el buscador en móvil */
+  .globe-container { width: 240px; height: 240px; } /* globo más pequeño */
+  .globe-glow      { width: 300px; height: 300px; } /* halo más pequeño */
+  .globe-rim       { width: 248px; height: 248px; } /* aro más pequeño */
+  .content-inner   { margin-top: -110px; }          /* menos margen negativo en móvil */
 }

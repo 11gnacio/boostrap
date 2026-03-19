@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Esta página sirve para TODOS los artículos de la wiki. -->
+<!-- El slug en la URL determina cuál artículo cargar: -->
+<!-- article.html?slug=imperio-romano -->
+<!-- article.html?slug=revolucion-francesa -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cargando... — El Eco de los Siglos</title>
+  <!-- JS actualizará este título con el nombre real del artículo -->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/article.css">
+</head>
+
+<body>
+
+  <!-- ============================================
+       NAVBAR
+       sticky-top: Bootstrap la pega arriba al hacer scroll.
+  ============================================= -->
+  <nav class="navbar sticky-top navbar-eco">
+  <!-- .sticky-top: Bootstrap - se queda fija arriba al hacer scroll -->
+
+    <div class="container-fluid d-flex align-items-center justify-content-between px-4">
+
+      <a class="navbar-brand d-flex align-items-center gap-2 brand-text" href="index.html">
+      <!-- href="index.html": al hacer clic vuelve al inicio -->
+        <img src="static/images/logo_boostrap.jpg" class="brand-dot rounded-circle" alt="logo">
+        <!-- .rounded-circle: Bootstrap - imagen circular -->
+        El Eco de los Siglos
+      </a>
+
+      <div class="search-wrapper d-none d-md-block">
+      <!-- .d-none .d-md-block: Bootstrap - oculto en móvil, visible desde 768px -->
+        <div class="search-icon-css"></div>
+        <input type="text" class="form-control border-0" placeholder="Buscar en los siglos..." id="inputBusqueda">
+        <!-- .form-control: Bootstrap - estilo de input -->
+        <!-- .border-0: Bootstrap - sin borde propio (lo pone el wrapper) -->
+      </div>
+
+      <div class="d-flex gap-2">
+      <!-- .d-flex .gap-2: Bootstrap - botones en fila con 8px entre ellos -->
+        <button class="btn btn-eco btn-ghost">Login</button>
+        <!-- .btn: Bootstrap - clase base para botones -->
+        <button class="btn btn-eco btn-solid">Registrarse</button>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ============================================
+       CABECERA DEL ARTÍCULO
+       JS aplica la imagen y el texto dinámicamente.
+  ============================================= -->
+  <header class="article-header position-relative overflow-hidden">
+  <!-- .position-relative: Bootstrap - hijos con absolute se ubican aquí -->
+  <!-- .overflow-hidden: Bootstrap - nada se sale de los bordes -->
+
+    <!-- Imagen de fondo: JS la aplica con style.backgroundImage -->
+    <div class="article-header-bg position-absolute top-0 start-0 w-100 h-100" id="articleHeaderBg"></div>
+    <!-- .position-absolute .top-0 .start-0 .w-100 .h-100: Bootstrap - cubre toda la cabecera -->
+
+    <!-- Capa oscura para legibilidad del texto -->
+    <div class="article-header-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+    <!-- Texto de la cabecera -->
+    <div class="container position-relative py-5" style="z-index:2;">
+    <!-- .container: Bootstrap - limita y centra -->
+    <!-- .py-5: Bootstrap - padding vertical de 48px -->
+    <!-- z-index:2: encima de la capa oscura -->
+
+      <!-- Skeleton: visible mientras carga la API -->
+      <div id="headerSkeleton">
+        <p class="placeholder-glow mb-2">
+          <span class="placeholder col-2"></span>
+          <!-- simula la pastilla de categoría -->
+        </p>
+        <p class="placeholder-glow mb-3">
+          <span class="placeholder col-7" style="height:40px;display:block;"></span>
+          <!-- simula el título grande -->
+        </p>
+        <p class="placeholder-glow mb-0">
+          <span class="placeholder col-4"></span>
+          <!-- simula la fecha y tiempo de lectura -->
+        </p>
+      </div>
+
+      <!-- Contenido real: oculto con d-none hasta que JS lo llene -->
+      <div id="headerContent" class="d-none">
+      <!-- .d-none: Bootstrap - display:none. JS quitará esta clase cuando lleguen los datos -->
+
+        <span class="badge article-category mb-2" id="articleCategory"></span>
+        <!-- .badge: Bootstrap - pastilla/etiqueta pequeña -->
+        <!-- .mb-2: Bootstrap - margen inferior de 8px -->
+        <!-- JS llenará el texto con datos.category -->
+
+        <h1 class="article-title mb-3" id="articleTitle"></h1>
+        <!-- JS llenará con datos.title -->
+
+        <div class="d-flex align-items-center gap-3 article-meta flex-wrap">
+        <!-- .d-flex .align-items-center: Bootstrap - elementos en fila centrados -->
+        <!-- .gap-3: Bootstrap - 16px entre elementos -->
+        <!-- .flex-wrap: Bootstrap - saltan de línea en móvil si no caben -->
+          <span id="articleDate"></span>
+          <!-- JS llenará con datos.date -->
+          <span class="meta-dot d-none d-sm-inline-block"></span>
+          <!-- .d-none .d-sm-inline-block: Bootstrap - punto visible solo desde 576px -->
+          <span id="articleReadTime"></span>
+          <!-- JS llenará con datos.readTime -->
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ============================================
+       CUERPO DEL ARTÍCULO
+  ============================================= -->
+  <main class="py-5 article-main">
+  <!-- .py-5: Bootstrap - padding vertical de 48px -->
+
+    <div class="container">
+
+      <div class="row justify-content-center">
+      <!-- .row: Bootstrap - fila de la grilla de 12 columnas -->
+      <!-- .justify-content-center: Bootstrap - centra las columnas -->
+
+        <div class="col-12 col-md-9 col-lg-7">
+        <!-- .col-12: móvil - ancho completo -->
+        <!-- .col-md-9: tablet - 9/12 columnas -->
+        <!-- .col-lg-7: desktop - 7/12 columnas (ancho ideal para leer) -->
+
+          <!-- Índice de contenidos -->
+          <div class="card article-toc mb-4" id="articleToc">
+          <!-- .card: Bootstrap - caja con borde y fondo -->
+          <!-- .mb-4: Bootstrap - margen inferior de 24px -->
+
+            <div class="card-body">
+            <!-- .card-body: Bootstrap - padding interior de la card -->
+
+              <p class="card-title toc-title mb-2">Contenidos</p>
+              <!-- .card-title: Bootstrap - estilo de título para cards -->
+
+              <!-- Skeleton del índice -->
+              <div id="tocSkeleton" class="placeholder-glow">
+              <!-- .placeholder-glow: Bootstrap - animación de brillo -->
+                <span class="placeholder col-8 d-block mb-1"></span>
+                <!-- .d-block: Bootstrap - ocupa su propia línea -->
+                <!-- .mb-1: Bootstrap - margen inferior de 4px -->
+                <span class="placeholder col-6 d-block mb-1"></span>
+                <span class="placeholder col-7 d-block mb-1"></span>
+                <span class="placeholder col-5 d-block"></span>
+              </div>
+
+              <ol class="mb-0 ps-3 d-none" id="tocList">
+              <!-- <ol>: lista numerada -->
+              <!-- .mb-0: Bootstrap - sin margen inferior -->
+              <!-- .ps-3: Bootstrap - padding izquierdo de 16px -->
+              <!-- .d-none: Bootstrap - oculto hasta que JS lo llene -->
+              </ol>
+
+            </div>
+          </div>
+
+          <!-- Skeleton del cuerpo -->
+          <div id="bodySkeleton">
+          <!-- visible mientras la API no responde -->
+            <p class="placeholder-glow">
+              <span class="placeholder col-12"></span>
+              <span class="placeholder col-12"></span>
+              <span class="placeholder col-8"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder col-12"></span>
+              <span class="placeholder col-12"></span>
+              <span class="placeholder col-6"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder col-12"></span>
+              <span class="placeholder col-10"></span>
+              <span class="placeholder col-7"></span>
+            </p>
+          </div>
+
+          <!-- Contenido real del artículo -->
+          <div class="article-body d-none" id="articleBody"></div>
+          <!-- .d-none: Bootstrap - oculto hasta que JS inserte el contenido -->
+          <!-- JS hará: articleBody.innerHTML = datos.content -->
+
+
+          <!-- Pie: tags y botón volver -->
+          <div class="mt-5 pt-4 border-top article-footer d-none" id="articleFooter">
+          <!-- .mt-5: Bootstrap - margen superior de 48px -->
+          <!-- .pt-4: Bootstrap - padding superior de 24px -->
+          <!-- .border-top: Bootstrap - línea divisoria arriba -->
+          <!-- .d-none: Bootstrap - oculto hasta que lleguen los datos -->
+
+            <p class="small text-uppercase mb-3 tags-label">Etiquetas</p>
+            <!-- .small: Bootstrap - texto más pequeño -->
+            <!-- .text-uppercase: Bootstrap - MAYÚSCULAS automáticas -->
+
+            <div class="d-flex flex-wrap gap-2 mb-5" id="articleTags">
+            <!-- .flex-wrap: Bootstrap - los tags saltan de línea si no caben -->
+            <!-- .gap-2: Bootstrap - 8px entre tags -->
+            </div>
+
+            <div class="text-center">
+            <!-- .text-center: Bootstrap - centra el botón -->
+              <a href="index.html" class="btn btn-eco btn-ghost">Volver al inicio</a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  /*
+  =============================================
+  PÁGINA DINÁMICA DE ARTÍCULO
+  Una sola página muestra cualquier artículo.
+  El slug en la URL decide cuál cargar.
+  =============================================
+  */
+
+  /* 1. LEER EL SLUG DE LA URL */
+  const params = new URLSearchParams(window.location.search);
+  /* URLSearchParams: parsea los parámetros de la URL */
+
+  const slug = params.get('slug');
+  /* obtiene el valor del parámetro "slug" de la URL */
+
+  if (!slug) {
+  /* si no hay slug, redirige al inicio */
+    window.location.href = 'index.html';
+    /* window.location.href: redirige a otra página */
+  }
+
+
+  /* 2. DATOS DE EJEMPLO POR SLUG
+     Simula la respuesta de la API.
+     Cuando la API esté lista en Vercel, reemplaza con:
+     const res   = await fetch(`/api/articles/${slug}`);
+     const datos = await res.json();
+  */
+  const articulosEjemplo = {
+  /* objeto JS: clave = slug, valor = datos del artículo */
+
+    'imperio-romano': {
+      title:    'El Imperio Romano',
+      category: 'Historia Antigua',
+      date:     '15 de marzo, 2024',
+      readTime: '8 min de lectura',
+      image:    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Blarenberghe_-_Battle_of_Fontenoy.jpg/1280px-Van_Blarenberghe_-_Battle_of_Fontenoy.jpg',
+      tags:     ['Roma', 'Imperio', 'Antigüedad', 'Europa'],
+      content: `
+        <h2 id="origen">Origen y fundación</h2>
+        <p>El Imperio romano fue la etapa de la civilización romana entre el fin de la República y la caída del Imperio de Occidente en el 476 d.C.</p>
+        <p>Según la tradición, Roma fue fundada en el año 753 a.C. por Rómulo, quien se convirtió en su primer rey.</p>
+        <h2 id="expansion">Expansión territorial</h2>
+        <p>En su mayor extensión, el Imperio abarcaba tres continentes. Las legiones conquistaron la Galia, Egipto, Siria y el norte de África.</p>
+        <h2 id="caida">Caída del Imperio</h2>
+        <p>La caída en el 476 d.C. fue resultado de invasiones bárbaras, crisis económica e inestabilidad política.</p>
+      `
+    },
+
+    'revolucion-francesa': {
+      title:    'La Revolución Francesa',
+      category: 'Edad Moderna',
+      date:     '20 de abril, 2024',
+      readTime: '10 min de lectura',
+      image:    'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg/1280px-Eug%C3%A8ne_Delacroix_-_La_libert%C3%A9_guidant_le_peuple.jpg',
+      tags:     ['Francia', 'Revolución', 'Modernidad', 'Política'],
+      content: `
+        <h2 id="causas">Causas de la Revolución</h2>
+        <p>La Revolución Francesa de 1789 fue resultado de una crisis económica, el descontento popular y la influencia de la Ilustración.</p>
+        <h2 id="desarrollo">Desarrollo y etapas</h2>
+        <p>La Revolución pasó por varias etapas: desde la moderada Asamblea Nacional hasta el radical período del Terror.</p>
+        <h2 id="legado">Legado histórico</h2>
+        <p>Instauró los principios de libertad, igualdad y fraternidad que influenciaron las democracias modernas.</p>
+      `
+    }
+
+  };
+
+
+  /* 3. CARGAR EL ARTÍCULO */
+  async function cargarArticulo() {
+  /* async: puede usar await para esperar respuestas */
+
+    try {
+
+      await new Promise(r => setTimeout(r, 500));
+      /* simula el tiempo de respuesta de una API real (500ms) */
+      /* await: pausa hasta que el tiempo pase */
+
+      /* ---- CUANDO LA API ESTÉ LISTA, REEMPLAZA ESTO: ----
+      const res   = await fetch(`/api/articles/${slug}`);
+      const datos = await res.json();
+      ---------------------------------------------------- */
+
+      const datos = articulosEjemplo[slug];
+      /* busca el slug en el objeto de ejemplos */
+
+      if (!datos) {
+        mostrarError('Artículo no encontrado.');
+        return; /* sale de la función */
+      }
+
+      llenarPagina(datos);
+
+    } catch (error) {
+      console.error('Error:', error);
+      /* console.error: muestra el error en la consola (F12) */
+      mostrarError('No se pudo cargar el artículo.');
+    }
+  }
+
+
+  /* 4. LLENAR LA PÁGINA CON LOS DATOS */
+  function llenarPagina(datos) {
+
+    document.title = `${datos.title} — El Eco de los Siglos`;
+    /* cambia el título de la pestaña del navegador */
+
+    document.getElementById('articleHeaderBg').style.backgroundImage = `url('${datos.image}')`;
+    /* aplica la imagen de fondo de la cabecera */
+
+    document.getElementById('articleCategory').textContent = datos.category;
+    document.getElementById('articleTitle').textContent    = datos.title;
+    document.getElementById('articleDate').textContent     = `Publicado el ${datos.date}`;
+    document.getElementById('articleReadTime').textContent = datos.readTime;
+    /* .textContent: cambia el texto visible del elemento */
+
+    /* Quitar skeletons y mostrar contenido real */
+    document.getElementById('headerSkeleton').remove();
+    /* .remove(): elimina el elemento del DOM */
+
+    document.getElementById('headerContent').classList.remove('d-none');
+    /* .classList.remove('d-none'): quita display:none → el elemento se hace visible */
+
+    document.getElementById('articleBody').innerHTML = datos.content;
+    /* .innerHTML: inserta el HTML completo del artículo */
+
+    document.getElementById('bodySkeleton').remove();
+    document.getElementById('articleBody').classList.remove('d-none');
+    /* muestra el cuerpo del artículo */
+
+    /* Insertar tags */
+    const contenedorTags = document.getElementById('articleTags');
+    datos.tags.forEach(function(tag) {
+    /* .forEach: recorre cada tag del array */
+
+      const span       = document.createElement('span');
+      /* createElement: crea un <span> desde JS */
+
+      span.className   = 'badge article-tag';
+      /* .badge: Bootstrap - estilo de pastilla */
+
+      span.textContent = tag;
+      contenedorTags.appendChild(span);
+      /* .appendChild: inserta el span en el contenedor */
+    });
+
+    document.getElementById('articleFooter').classList.remove('d-none');
+    /* muestra el pie del artículo */
+
+    generarIndice();
+  }
+
+
+  /* 5. GENERAR ÍNDICE AUTOMÁTICAMENTE */
+  function generarIndice() {
+
+    const titulos = document.querySelectorAll('#articleBody h2');
+    /* querySelectorAll: busca TODOS los <h2> dentro del artículo */
+
+    const lista = document.getElementById('tocList');
+
+    document.getElementById('tocSkeleton').remove();
+    /* elimina el skeleton del índice */
+
+    if (titulos.length === 0) {
+      document.getElementById('articleToc').remove();
+      /* si no hay secciones, elimina el índice completo */
+      return;
+    }
+
+    titulos.forEach(function(titulo) {
+
+      const li = document.createElement('li');
+      const a  = document.createElement('a');
+
+      a.href        = `#${titulo.id}`;
+      /* #id: al hacer clic salta a esa sección de la página */
+
+      a.textContent = titulo.textContent;
+      /* texto del enlace = texto del <h2> */
+
+      a.className   = 'toc-link';
+
+      li.appendChild(a);
+      lista.appendChild(li);
+    });
+
+    lista.classList.remove('d-none');
+    /* muestra el <ol> con todos los ítems */
+  }
+
+
+  /* 6. MOSTRAR ERROR */
+  function mostrarError(mensaje) {
+
+    ['headerSkeleton', 'bodySkeleton', 'tocSkeleton'].forEach(function(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+      /* elimina cada skeleton si existe */
+    });
+
+    document.getElementById('articleBody').innerHTML = `
+      <div class="alert alert-danger d-flex align-items-center gap-3" role="alert">
+        <span>${mensaje}</span>
+        <a href="index.html" class="btn btn-sm btn-eco btn-ghost ms-auto">Volver al inicio</a>
+      </div>
+    `;
+    /* .alert .alert-danger: Bootstrap - caja de error roja */
+    /* .d-flex .gap-3: Bootstrap - texto y botón en fila */
+    /* .ms-auto: Bootstrap - empuja el botón al extremo derecho */
+    /* role="alert": accesibilidad para lectores de pantalla */
+
+    document.getElementById('articleBody').classList.remove('d-none');
+  }
+
+
+  /* Iniciar carga al abrir la página */
+  cargarArticulo();
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+/* =============================================
+   ARTICLE.CSS
+   Solo lo que Bootstrap no puede hacer:
+   colores del tema oscuro, fuentes, imagen
+   de cabecera y animaciones.
+============================================= */
+
+
+/* Navbar sticky: fondo sólido en vez del degradado del hero */
+.navbar-eco.sticky-top {
+  background: rgba(3, 8, 16, 0.95) !important;
+  /* !important: sobreescribe el degradado de style.css */
+  backdrop-filter: blur(8px); /* desenfoca lo que hay detrás */
+  border-bottom: 1px solid rgba(140, 180, 255, 0.1); /* línea sutil abajo */
+}
+
+
+/* Cabecera del artículo */
+.article-header {
+  height: 380px;         /* altura fija */
+  display: flex;
+  align-items: flex-end; /* texto pegado al fondo */
+}
+
+/* Imagen de fondo de la cabecera */
+.article-header-bg {
+  background-size: cover;       /* cubre todo sin deformarse */
+  background-position: center;  /* centra la imagen */
+  background-repeat: no-repeat;
+  animation: headerZoom 12s ease-in-out infinite alternate;
+  /* zoom suave continuo. alternate: va y vuelve */
+}
+
+@keyframes headerZoom {
+  from { transform: scale(1);    } /* tamaño normal */
+  to   { transform: scale(1.04); } /* zoom 4% (muy sutil) */
+}
+
+/* Capa oscura sobre la imagen */
+.article-header-overlay {
+  z-index: 1; /* encima de la imagen */
+  background: linear-gradient(
+    to top,
+    rgba(3, 8, 16, 0.92) 0%,  /* casi negro abajo (donde está el texto) */
+    rgba(3, 8, 16, 0.40) 60%, /* semitransparente en el medio */
+    rgba(3, 8, 16, 0.15) 100% /* casi transparente arriba */
+  );
+}
+
+/* Pastilla de categoría */
+.article-category {
+  display: block;
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  background: rgba(140, 180, 255, 0.15);
+  color: rgba(140, 180, 255, 0.9);
+  border: 1px solid rgba(140, 180, 255, 0.3);
+  padding: 4px 12px;
+  border-radius: 3px;
+  width: fit-content; /* se ajusta al ancho del texto */
+}
+
+/* Título del artículo */
+.article-title {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 42px;
+  font-weight: 700;
+  color: #f0eadc;
+  line-height: 1.15;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8); /* sombra para legibilidad */
+}
+
+/* Metadatos (fecha, tiempo de lectura) */
+.article-meta {
+  font-size: 14px;
+  color: rgba(210, 200, 185, 0.7);
+}
+
+/* Punto separador entre metadatos */
+.meta-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%; /* círculo */
+  background: rgba(140, 180, 255, 0.5);
+  display: inline-block;
+}
+
+
+/* Fondo oscuro del cuerpo del artículo */
+.article-main {
+  background: var(--color-fondo); /* #030810 de style.css */
+  min-height: 60vh;
+}
+
+
+/* Card del índice de contenidos */
+.article-toc {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 180, 255, 0.15);
+  border-radius: 8px;
+}
+
+/* Título "Contenidos" del índice */
+.toc-title {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: rgba(140, 180, 255, 0.8);
+  text-transform: uppercase;
+}
+
+/* Enlace de cada ítem del índice */
+.toc-link {
+  color: rgba(200, 216, 248, 0.7);
+  text-decoration: none;
+  font-family: var(--fuente-cuerpo); /* EB Garamond */
+  font-size: 14px;
+  line-height: 2;    /* espacio entre ítems */
+  display: block;    /* cada ítem en su propia línea */
+  transition: color 0.2s; /* transición suave al hacer hover */
+}
+.toc-link:hover {
+  color: #ffffff; /* blanco al pasar el mouse */
+}
+
+
+/* Párrafos del artículo */
+.article-body p {
+  font-family: var(--fuente-cuerpo); /* EB Garamond */
+  font-size: 18px;
+  line-height: 1.85; /* altura de línea generosa para lectura cómoda */
+  color: rgba(220, 210, 195, 0.9);
+  margin-bottom: 24px;
+}
+
+/* Títulos de sección h2 del artículo */
+.article-body h2 {
+  font-family: var(--fuente-titulo); /* Cinzel */
+  font-size: 24px;
+  font-weight: 600;
+  color: #f0eadc;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(140, 180, 255, 0.15); /* línea divisoria sutil */
+}
+
+.article-body h2:first-child {
+  margin-top: 0; /* sin margen extra en el primer título */
+}
+
+
+/* Skeleton: sobreescribe el gris de Bootstrap por azul del tema */
+.placeholder {
+  background-color: rgba(140, 180, 255, 0.12) !important;
+  /* !important: fuerza el color sobre el gris de Bootstrap */
+  border-radius: 4px;
+  height: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+/* Tags del artículo */
+.article-tag {
+  font-family: var(--fuente-titulo);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  background: rgba(140, 180, 255, 0.12);
+  color: rgba(140, 180, 255, 0.9);
+  border: 1px solid rgba(140, 180, 255, 0.25);
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-weight: 400; /* Bootstrap pone 700 en badges, lo revertimos */
+}
+
+/* Etiqueta "ETIQUETAS" */
+.tags-label {
+  font-family: var(--fuente-titulo);
+  letter-spacing: 0.2em;
+  color: rgba(140, 180, 255, 0.6);
+}
+
+/* Línea divisoria del pie: sobreescribe el gris de Bootstrap */
+.article-footer {
+  border-color: rgba(140, 180, 255, 0.1) !important;
+}
+
+/* Sección de artículos en el index */
+.articles-section {
+  background: var(--color-fondo);
+}
+
+/* Título de sección */
+.section-title {
+  font-family: var(--fuente-titulo);
+  font-size: 28px;
+  font-weight: 600;
+  color: #f0eadc;
+  letter-spacing: 0.05em;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .article-header { height: 280px; }   /* cabecera más baja en móvil */
+  .article-title  { font-size: 28px; } /* título más pequeño */
+  .article-body p { font-size: 16px; } /* párrafos más pequeños */
+}
